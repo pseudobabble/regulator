@@ -34,7 +34,6 @@ class AdderRule(Rule):
     def apply(self, item, *args, **kwargs) -> Any:
         return item + 1
 
-
     def get_priority(self) -> int:
         return 1
 
@@ -68,8 +67,6 @@ item1 = 'hello'
 item2 = 'goodbye'
 item3 = 5
 items = [item1, item2, item3]
-# items = [item1, item2, item3]
-# items = [item1]
 
 chain = MyRuleChain()
 for item in items:
