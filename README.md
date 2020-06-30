@@ -5,9 +5,9 @@
 ```python
 from typing import Any
 
-from Regulable import Regulable
-from Rule import Rule
-from RuleChain import RuleChain
+from regulator.Regulable import Regulable
+from regulator.Rule import Rule
+from regulator.RuleChain import RuleChain
 
 
 class TruncatorRule(Rule):

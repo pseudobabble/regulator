@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 from typing import Any
 
-from Regulable import Regulable
-from Rule import Rule
-from RuleChain import RuleChain
+from regulator.Rule import Rule
+from regulator.RuleChain import RuleChain
 
 
 class TruncatorRule(Rule):
 
-    def apply(self, regulable: Regulable, *args, **kwargs) -> int:
-        if len(regulable):
-            return regulable[:-1]
+    rule_type = str
+
+    def apply(self, item, *args, **kwargs) -> str:
+        return item[:-1]
 
     def get_priority(self) -> int:
         return 3
@@ -18,16 +18,29 @@ class TruncatorRule(Rule):
 
 class ExtenderRule(Rule):
 
-    def apply(self, regulable: Regulable, *args, **kwargs) -> str:
-        if len(regulable):
-            return regulable + '_some_extension'
+    rule_type = str
+
+    def apply(self, item, *args, **kwargs) -> Any:
+        return item + '_some_extension'
 
     def get_priority(self) -> int:
         return 10
 
 
+class AdderRule(Rule):
+
+    rule_type = int
+
+    def apply(self, item, *args, **kwargs) -> Any:
+        return item + 1
+
+
+    def get_priority(self) -> int:
+        return 1
+
+
 class MyDependency:
-    def log(self, logged: Any, *args, **kwargs) -> str:
+    def log(self, logged: Any, *args, **kwargs) -> None:
         print('{}'.format(logged))
 
 
@@ -35,26 +48,28 @@ class MyRuleChain(RuleChain):
 
     rules = [
         TruncatorRule(),
-        ExtenderRule()
+        ExtenderRule(),
+        AdderRule()
     ]
 
-    def __init__(self, logger: MyDependency = MyDependency):
+    def __init__(self, logger: MyDependency = MyDependency) -> None:
         self.logger = logger()
 
-    def run_logged(self, regulable: Regulable, *args, **kwargs):
-        applied = self.run(regulable, args, kwargs)
+    def run_logged(self, item, *args, **kwargs) -> Any:
+        applied = self.run(item, args, kwargs)
         self.logger.log(applied)
 
         return applied
 
 
-class SomeRegulableItem(Regulable, str):
-    pass
 
 
-item1 = SomeRegulableItem('hello')
-item2 = SomeRegulableItem('goodbye')
-items = [item1, item2]
+item1 = 'hello'
+item2 = 'goodbye'
+item3 = 5
+items = [item1, item2, item3]
+# items = [item1, item2, item3]
+# items = [item1]
 
 chain = MyRuleChain()
 for item in items:
