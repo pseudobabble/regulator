@@ -1,3 +1,4 @@
 #!/usr/bin/env python3
 
-from regulator import Rule, RuleChain
+from .Rule import Rule
+from .RuleChain import RuleChain

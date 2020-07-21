@@ -5,18 +5,18 @@ from typing import Any
 
 class Rule:
 
-    rule_type = NotImplemented
+    rule_type = NotImplementedError
 
     @abstractmethod
     def apply(self, item, *args, **kwargs) -> Any:
-        raise NotImplemented
+        raise NotImplementedError
 
     @abstractmethod
     def get_priority(self) -> int:
-        raise NotImplemented
+        raise NotImplementedError
 
     def run(self, item, *args, **kwargs) -> Any:
-        if isinstance(item, self.rule_type):
+        if type(item) == self.rule_type:
             return self.apply(item, *args, *kwargs)
 
         return item

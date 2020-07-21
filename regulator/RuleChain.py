@@ -7,7 +7,7 @@ from regulator.Rule import Rule
 
 class RuleChain:
 
-    rules: List[Rule] = []
+    rules = []
 
     def run(self, item, *args, **kwargs) -> None:
         rules = sorted(self.rules, key=lambda rule: rule.get_priority(), reverse=True)
