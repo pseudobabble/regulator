@@ -23,7 +23,7 @@ class TestRuleChain:
         [list, 1, lambda x: x, []],
         [dict, 1, lambda x: x, {}],
     ])
-    def test_run_chain(self, rule_type, priority, function, item):
+    def test__run_chain(self, rule_type, priority, function, item):
         rules = [self._get_concrete_rule(rule_type, priority, function)]
         rule_chain = self._get_rule_chain(rules)
         modified_item = rule_chain.run(item)
